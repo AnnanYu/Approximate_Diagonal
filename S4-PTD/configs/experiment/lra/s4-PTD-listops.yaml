@@ -1,0 +1,44 @@
+# @package _global_
+defaults:
+  - /pipeline: listops
+  - /model: s4-ptd
+  - override /scheduler: cosine_warmup
+
+model:
+  dropout: 0.
+  n_layers: 8
+  d_model: 256
+  prenorm: false
+  norm: batch
+  layer:
+    d_state: 64
+    lr:
+      dt: 0.0004
+      A: 0.0004
+      B: 0.0004
+    dt_min: 0.001
+    dt_max: 1
+    init: legs
+    bidirectional: true
+    final_act: glu
+    n_ssm: 1
+
+decoder:
+  mode: pool
+
+loader:
+  batch_size: 50
+
+optimizer:
+  lr: 0.002
+  weight_decay: 0.05
+
+scheduler:
+  num_training_steps: 1200000
+  num_warmup_steps: 12000
+
+trainer:
+  max_epochs: 80
+
+train:
+  seed: 2222
