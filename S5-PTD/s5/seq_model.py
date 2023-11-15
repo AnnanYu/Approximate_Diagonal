@@ -153,7 +153,11 @@ class ClassificationModel(nn.Module):
         """
         if self.padded:
             x, length = x  # input consists of data and prepadded seq lens
-        x += 3e-1 * np.cos(325.4*np.linspace(0,10.23,1024))
+        
+        if self.training:
+            x += 1e-10 * np.cos(325.4*np.linspace(0,10.23,1024))
+        else:
+            x += 3e-1 * np.cos(325.4*np.linspace(0,10.23,1024))
 
         x = self.encoder(x, integration_timesteps)
         if self.mode in ["pool"]:
